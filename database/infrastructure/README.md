@@ -1,0 +1,1 @@
+Aquí colocarás las implementaciones concretas de la lógica de persistencia y cualquier otra infraestructura.

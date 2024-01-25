@@ -1,0 +1,1 @@
+Contendrá la lógica de aplicación y los casos de uso.

@@ -1,0 +1,1 @@
+Contendrá las entidades, objetos de valor y cualquier lógica de negocio.
