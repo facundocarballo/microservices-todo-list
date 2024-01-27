@@ -3,9 +3,11 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"net/http"
 	"os"
 
+	"github.com/facundocarballo/microservices-todo-list/domain"
+	infrastructure "github.com/facundocarballo/microservices-todo-list/infrastructure/user"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
@@ -49,12 +51,26 @@ func main() {
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
-	app.Use(func(c *fiber.Ctx) error {
-		return c.Status(http.StatusNotFound).SendString("Endpoint not found.")
-	})
-
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("¡Hola, Fiber!")
+	})
+
+	app.Post("/user", func(c *fiber.Ctx) error {
+		user := domain.BodyToUser(c.Body())
+		if user == nil {
+			return c.Status(fiber.StatusBadRequest).SendString("Body of the request have to contains the specif interface of a user.")
+		}
+		userRepository := infrastructure.NewMySqlUserRepository(db)
+		user, err := userRepository.Create(user)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString("Cant create the user properly, check the body request.")
+		}
+		c.Set("Content-Type", "application/json")
+		return c.Status(fiber.StatusAccepted).JSON(user)
+	})
+
+	app.Use(func(c *fiber.Ctx) error {
+		return c.Status(fiber.StatusNotFound).SendString("Endpoint not found.")
 	})
 
 	app.Listen(":" + PORT)

@@ -4,6 +4,7 @@ go 1.21.0
 
 require (
 	github.com/andybalholm/brotli v1.1.0 // indirect
+	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/gofiber/fiber/v2 v2.52.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
