@@ -49,5 +49,27 @@ func (mySql *MySqlUserRepository) Delete(user *domain.User) error {
 }
 
 func (mySql *MySqlUserRepository) Find(id int) (*domain.User, error) {
-	return nil, nil
+	rows, err := mySql.db.Query("SELECT username, email, photo_url, created_at FROM User WHERE id = (?)", id)
+	if err != nil {
+		fmt.Println("Error querying. ", err.Error())
+		return nil, err
+	}
+	defer rows.Close()
+
+	var user domain.User
+	user.Id = id
+	for rows.Next() {
+		err := rows.Scan(&user.Username, &user.Email, &user.PhotoUrl, &user.CreatedAt)
+		if err != nil {
+			fmt.Println("Error iterating the query. ", err.Error())
+			return nil, err
+		}
+	}
+
+	if err := rows.Err(); err != nil {
+		fmt.Println("Error at the end of the query. ", err.Error())
+		return nil, err
+	}
+
+	return &user, nil
 }
