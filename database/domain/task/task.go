@@ -6,8 +6,9 @@ type Task struct {
 	Id          int     `json:"id"`
 	Name        string  `json:"name"`
 	CreatedAt   []uint8 `json:"created_at"`
+	CategoryId  int     `json:"category_id"`
+	UserId      int     `json:"user_id"`
 	Description *string `json:"description"`
-	CategoryId  *int    `json:"category_id"`
 }
 
 func BodyToTask(body []byte) *Task {
@@ -15,11 +16,11 @@ func BodyToTask(body []byte) *Task {
 		return nil
 	}
 
-	var taSK Task
-	err := json.Unmarshal(body, &taSK)
+	var task Task
+	err := json.Unmarshal(body, &task)
 	if err != nil {
 		return nil
 	}
 
-	return &taSK
+	return &task
 }

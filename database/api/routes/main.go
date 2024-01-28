@@ -8,4 +8,5 @@ import (
 
 func SetUp(app *fiber.App, db *sql.DB) {
 	SetUpUserRoutes(app, db)
+	SetUpTaskRoutes(app, db)
 }
