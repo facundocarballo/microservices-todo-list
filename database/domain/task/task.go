@@ -7,7 +7,6 @@ type Task struct {
 	Name        string  `json:"name"`
 	CreatedAt   []uint8 `json:"created_at"`
 	CategoryId  int     `json:"category_id"`
-	UserId      int     `json:"user_id"`
 	Description *string `json:"description"`
 }
 

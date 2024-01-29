@@ -40,7 +40,7 @@ func (mySql *MySqlTaskRepository) Create(task *domain_task.Task) (*domain_task.T
 	task.Id = newId
 	task.CreatedAt = newCreatedAt
 
-	return nil, nil
+	return task, nil
 }
 
 func (mySql *MySqlTaskRepository) Update(task *domain_task.Task) (*domain_task.Task, error) {
@@ -111,9 +111,14 @@ func (mySql *MySqlTaskRepository) Get(user *domain.User) ([]*domain_task.Task, e
 
 	for rows.Next() {
 		var task domain_task.Task
-		task.UserId = user.Id
 
-		err := rows.Scan(&task.Name, &task.Description, &task.CreatedAt, &task.CategoryId)
+		err := rows.Scan(
+			&task.Id,
+			&task.Name,
+			&task.Description,
+			&task.CreatedAt,
+			&task.CategoryId,
+		)
 		if err != nil {
 			fmt.Println("Error iterating the query. ", err.Error())
 			return nil, err

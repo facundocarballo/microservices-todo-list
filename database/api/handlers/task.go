@@ -11,8 +11,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// TODO: Test this methods with POSTMAN
-
 func CreateTask(
 	c *fiber.Ctx,
 	db *sql.DB,
