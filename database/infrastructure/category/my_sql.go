@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/facundocarballo/microservices-todo-list/api/utils"
 	"github.com/facundocarballo/microservices-todo-list/domain"
 	domain_task "github.com/facundocarballo/microservices-todo-list/domain/task"
 )
@@ -27,13 +28,13 @@ func (mySql *MySqlCategoryRepository) Create(category *domain_task.Category) (*d
 		category.Name, category.Description, category.PhotoUrl, category.ParentId, category.UserId,
 	)
 	if err != nil {
-		fmt.Println("Error: executing the stored procedure.\n", err.Error())
+		fmt.Println(utils.ERR_EXECUTING_SP, err.Error())
 		return nil, err
 	}
 
 	err = mySql.db.QueryRow("SELECT @newId, @newCreatedAt").Scan(&newId, &newCreatedAt)
 	if err != nil {
-		fmt.Println("Error: executing query row.\n", err.Error())
+		fmt.Println(utils.ERR_QUERYING, err.Error())
 		return nil, err
 	}
 
@@ -50,7 +51,7 @@ func (mySql *MySqlCategoryRepository) Delete(category *domain_task.Category) (*d
 func (mySql *MySqlCategoryRepository) Get(user *domain.User) ([]*domain_task.Category, error) {
 	rows, err := mySql.db.Query("CALL GetAllCategoriesFromUser(?)", user.Id)
 	if err != nil {
-		fmt.Println("Error querying. ", err.Error())
+		fmt.Println(utils.ERR_QUERY, err.Error())
 		return nil, err
 	}
 
@@ -69,7 +70,7 @@ func (mySql *MySqlCategoryRepository) Get(user *domain.User) ([]*domain_task.Cat
 			&category.UserId,
 		)
 		if err != nil {
-			fmt.Println("Error iterating the query. ", err.Error())
+			fmt.Println(utils.ERR_ITERATING_QUERY, err.Error())
 			return nil, err
 		}
 
@@ -77,7 +78,7 @@ func (mySql *MySqlCategoryRepository) Get(user *domain.User) ([]*domain_task.Cat
 	}
 
 	if err := rows.Err(); err != nil {
-		fmt.Println("Error at the end of the query. ", err.Error())
+		fmt.Println(utils.ERR_END_QUERY, err.Error())
 		return nil, err
 	}
 

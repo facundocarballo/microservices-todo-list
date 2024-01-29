@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/facundocarballo/microservices-todo-list/api/utils"
 	"github.com/facundocarballo/microservices-todo-list/domain"
 	domain_task "github.com/facundocarballo/microservices-todo-list/domain/task"
 )
@@ -27,13 +28,13 @@ func (mySql *MySqlTaskRepository) Create(task *domain_task.Task) (*domain_task.T
 		task.Name, task.Description, task.CategoryId,
 	)
 	if err != nil {
-		fmt.Println("Error: executing the stored procedure.\n", err.Error())
+		fmt.Println(utils.ERR_EXECUTING_SP, err.Error())
 		return nil, err
 	}
 
 	err = mySql.db.QueryRow("SELECT @newId, @newCreatedAt").Scan(&newId, &newCreatedAt)
 	if err != nil {
-		fmt.Println("Error: executing query row.\n", err.Error())
+		fmt.Println(utils.ERR_QUERYING, err.Error())
 		return nil, err
 	}
 
@@ -56,13 +57,13 @@ func (mySql *MySqlTaskRepository) Complete(task *domain_task.Task) (*domain_task
 		task.Id,
 	)
 	if err != nil {
-		fmt.Println("Error: executing the stored procedure.\n", err.Error())
+		fmt.Println(utils.ERR_EXECUTING_SP, err.Error())
 		return nil, err
 	}
 
 	err = mySql.db.QueryRow("SELECT @newId, @newCreatedAt").Scan(&newId, &newCompletedAt)
 	if err != nil {
-		fmt.Println("Error: executing query row.\n", err.Error())
+		fmt.Println(utils.ERR_QUERYING, err.Error())
 		return nil, err
 	}
 
@@ -82,13 +83,13 @@ func (mySql *MySqlTaskRepository) Delete(task *domain_task.Task) (*domain_task.T
 		task.Id,
 	)
 	if err != nil {
-		fmt.Println("Error: executing the stored procedure.\n", err.Error())
+		fmt.Println(utils.ERR_EXECUTING_SP, err.Error())
 		return nil, err
 	}
 
 	err = mySql.db.QueryRow("SELECT @newId, @newDeletedAt").Scan(&newId, &newDeletedAt)
 	if err != nil {
-		fmt.Println("Error: executing query row.\n", err.Error())
+		fmt.Println(utils.ERR_QUERYING, err.Error())
 		return nil, err
 	}
 
@@ -102,7 +103,7 @@ func (mySql *MySqlTaskRepository) Delete(task *domain_task.Task) (*domain_task.T
 func (mySql *MySqlTaskRepository) Get(user *domain.User) ([]*domain_task.Task, error) {
 	rows, err := mySql.db.Query("CALL GetTaskToDoFromUser(?)", user.Id)
 	if err != nil {
-		fmt.Println("Error querying. ", err.Error())
+		fmt.Println(utils.ERR_QUERY, err.Error())
 		return nil, err
 	}
 	defer rows.Close()
@@ -120,7 +121,7 @@ func (mySql *MySqlTaskRepository) Get(user *domain.User) ([]*domain_task.Task, e
 			&task.CategoryId,
 		)
 		if err != nil {
-			fmt.Println("Error iterating the query. ", err.Error())
+			fmt.Println(utils.ERR_ITERATING_QUERY, err.Error())
 			return nil, err
 		}
 
@@ -128,7 +129,7 @@ func (mySql *MySqlTaskRepository) Get(user *domain.User) ([]*domain_task.Task, e
 	}
 
 	if err := rows.Err(); err != nil {
-		fmt.Println("Error at the end of the query. ", err.Error())
+		fmt.Println(utils.ERR_END_QUERY, err.Error())
 		return nil, err
 	}
 

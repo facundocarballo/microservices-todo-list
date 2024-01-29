@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/facundocarballo/microservices-todo-list/api/utils"
 	"github.com/facundocarballo/microservices-todo-list/domain"
 )
 
@@ -25,13 +26,13 @@ func (mySql *MySqlUserRepository) Create(user *domain.User) (*domain.User, error
 		user.Username, user.Email, user.Password, user.PhotoUrl,
 	)
 	if err != nil {
-		fmt.Println("Error: executing the stored procedure.\n", err.Error())
+		fmt.Println(utils.ERR_EXECUTING_SP, err.Error())
 		return nil, err
 	}
 
 	err = mySql.db.QueryRow("SELECT @newId, @newCreatedAt").Scan(&newId, &newCreatedAt)
 	if err != nil {
-		fmt.Println("Error: executing query row.\n", err.Error())
+		fmt.Println(utils.ERR_QUERYING, err.Error())
 		return nil, err
 	}
 
@@ -51,7 +52,7 @@ func (mySql *MySqlUserRepository) Delete(user *domain.User) error {
 func (mySql *MySqlUserRepository) Find(id int) (*domain.User, error) {
 	rows, err := mySql.db.Query("SELECT username, email, photo_url, created_at FROM User WHERE id = (?)", id)
 	if err != nil {
-		fmt.Println("Error querying. ", err.Error())
+		fmt.Println(utils.ERR_QUERY, err.Error())
 		return nil, err
 	}
 	defer rows.Close()
@@ -61,7 +62,7 @@ func (mySql *MySqlUserRepository) Find(id int) (*domain.User, error) {
 	for rows.Next() {
 		err := rows.Scan(&user.Username, &user.Email, &user.PhotoUrl, &user.CreatedAt)
 		if err != nil {
-			fmt.Println("Error iterating the query. ", err.Error())
+			fmt.Println(utils.ERR_END_QUERY, err.Error())
 			return nil, err
 		}
 	}

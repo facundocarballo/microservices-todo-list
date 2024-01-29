@@ -48,7 +48,7 @@ func CreateCategory(
 
 	category, err := categoryRepository.Create(category)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).SendString("Cannot complete the category, check the body request.")
+		return c.Status(fiber.StatusInternalServerError).SendString("Cannot create the category, check the body request.")
 	}
 
 	c.Set(utils.CONTENT_TYPE, utils.APP_JSON)
