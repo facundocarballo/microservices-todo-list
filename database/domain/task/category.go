@@ -6,6 +6,7 @@ type Category struct {
 	Id          int     `json:"id"`
 	Name        string  `json:"name"`
 	CreatedAt   []uint8 `json:"created_at"`
+	UserId      int     `json:"user_id"`
 	Description *string `json:"description"`
 	PhotoUrl    *string `json:"photo_url"`
 	ParentId    *int    `json:"parent_id"`

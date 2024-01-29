@@ -25,7 +25,7 @@ func CreateTask(
 
 	task, err := taskRepository.Create(task)
 	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).SendString("Cannot complete the task, check the body request.")
+		return c.Status(fiber.StatusInternalServerError).SendString("Cannot create the task, check the body request.")
 	}
 
 	c.Set(utils.CONTENT_TYPE, utils.APP_JSON)
