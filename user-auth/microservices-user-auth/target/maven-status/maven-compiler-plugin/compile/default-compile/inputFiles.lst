@@ -1,4 +1,7 @@
-C:\Users\Facundo\Documents\Facundo\YouTube\microservices-todo-list\user-auth\microservices-user-auth\src\main\java\com\facundocarballo\microservices\App.java
+C:\Users\Facundo\Documents\Facundo\YouTube\microservices-todo-list\user-auth\microservices-user-auth\src\main\java\com\facundocarballo\microservices\app\AppConfig.java
+C:\Users\Facundo\Documents\Facundo\YouTube\microservices-todo-list\user-auth\microservices-user-auth\src\main\java\com\facundocarballo\microservices\app\Controller.java
+C:\Users\Facundo\Documents\Facundo\YouTube\microservices-todo-list\user-auth\microservices-user-auth\src\main\java\com\facundocarballo\microservices\app\Service.java
+C:\Users\Facundo\Documents\Facundo\YouTube\microservices-todo-list\user-auth\microservices-user-auth\src\main\java\com\facundocarballo\microservices\app\App.java
 C:\Users\Facundo\Documents\Facundo\YouTube\microservices-todo-list\user-auth\microservices-user-auth\src\main\java\com\facundocarballo\microservices\domain\EnviromentVariables.java
 C:\Users\Facundo\Documents\Facundo\YouTube\microservices-todo-list\user-auth\microservices-user-auth\src\main\java\com\facundocarballo\microservices\domain\JWT.java
 C:\Users\Facundo\Documents\Facundo\YouTube\microservices-todo-list\user-auth\microservices-user-auth\src\main\java\com\facundocarballo\microservices\domain\User.java

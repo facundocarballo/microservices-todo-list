@@ -1,7 +1,5 @@
 package com.facundocarballo.microservices.domain;
 
-import io.jsonwebtoken.Jwts;
-
 public class JWT {
 
     private String token;
