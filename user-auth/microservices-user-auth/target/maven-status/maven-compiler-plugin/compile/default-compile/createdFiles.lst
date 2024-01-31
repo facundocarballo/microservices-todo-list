@@ -1,6 +1,2 @@
-com\facundocarballo\microservices\domain\User.class
-com\facundocarballo\microservices\app\Controller.class
+com\facundocarballo\microservices\app\AppConfig.class
 com\facundocarballo\microservices\domain\EnviromentVariables.class
-com\facundocarballo\microservices\domain\JWT.class
-com\facundocarballo\microservices\app\App.class
-com\facundocarballo\microservices\app\Service.class
